@@ -1,5 +1,102 @@
 body {
     font-family: 'Lexend', Arial, sans-serif; 
-    margin: 0;
+    font-weight: 400;
+    margin: 40px 0 0 0;
     padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(242, 249, 255);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: lightgoldenrodyellow;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    width: 1000px;
+    height: 600px;
+    margin: 20px;
+    padding: 40px;
+}
+
+/* Question / task styling */
+.question {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    flex: 3;
+}
+
+.question-type {
+    font-size: 36px;
+    margin-bottom: 42px;
+    font-weight: inherit;
+}
+
+.question-term {
+    font-size: 108px;
+}
+
+/* User input box styling */
+.user-response {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 80%;
+    flex: 1;
+}
+
+#user-response-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+}
+
+#input-box {
+    font-size: 24px;
+    flex: 1;
+    padding: 24px 32px 24px 32px;
+    margin-right: 20px;
+    box-shadow: inset 2px 2px 1cm rgba(0, 0, 0, 0);
+    border: none;
+    border-radius: 16px;
+}
+
+#submit-button {
+    font-size: 28px;
+    height: 72px;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    border: none;
+    border-radius: 16px;
+    color: white;
+    background-color: black;
+}
+
+
+
+/* Feedback styling */
+.feedback {
+
 }

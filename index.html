@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcards</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
     <script src="index.js"></script>
@@ -14,19 +14,20 @@
     <main>
         <div class="card">
             <div class="question">
-                Question / Prompt
+                <span class="question-type">Create a sentence using the term:</span>
+                <span class="question-term">El autobús</span>
             </div>
-            <form id="user-response">
-                <input type="text" id="flashcard-input" class="flashcard-input" placeholder="Enter your response">
-                <button type="submit" class="flashcard-button">Submit</button>
-            </form>
+            <div class="user-response">
+                <form id="user-response-form">
+                    <input id="input-box" type="text" placeholder="Enter your response">
+                    <button id="submit-button" type="submit">Submit</button>
+                </form>
+            </div>
         </div>
+        
         <div class="feedback">
             Feedback goes here
         </div>
-        
     </main>
-        
-
 </body>
 </html>
