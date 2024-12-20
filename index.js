@@ -63,9 +63,6 @@ signOutBtn.addEventListener('click', function() {
 const whenSignedIn = document.getElementById('signed-in');
 const whenSignedOut = document.getElementById('signed-out');
 
-whenSignedOut.hidden = false;
-whenSignedIn.hidden = true;
-
 onAuthStateChanged(auth, user => {
     if (user) {
         // signed in
