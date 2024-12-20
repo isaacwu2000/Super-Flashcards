@@ -6,10 +6,26 @@
     <title>Home</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/practice.css">
+    <link rel="stylesheet" href="styles/index.css">
 
     <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js"></script>
+    <script>
+        // Setting up the Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB_K92WQMoXiOe5YQPqngvsc36Yb6P5W94",
+            authDomain: "super-spanish-flashcards.firebaseapp.com",
+            projectId: "super-spanish-flashcards",
+            storageBucket: "super-spanish-flashcards.firebasestorage.app",
+            messagingSenderId: "908159020771",
+            appId: "1:908159020771:web:4f16d94b9199a6af709fd6",
+            measurementId: "G-DMXPEV6C04"
+        };
+        const app = initializeApp(firebaseConfig);
+    </script>
+    <script src="index.js" defer></script>
 </head>
 <body>
     Home page

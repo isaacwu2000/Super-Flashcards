@@ -8,10 +8,3 @@ body {
     background-color: rgb(242, 249, 255);
 }
 
-main {
-    display: flex;
-    margin-bottom: 100px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
