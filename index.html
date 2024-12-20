@@ -7,11 +7,39 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/flashcard.css">
 
     <script src="index.js" type="module"></script>
 </head>
 <body>
-    <button id="sign-in-google">Sign In with Google</button>
-    <button id="sign-out">Sign Out</button>
+    <div id="signed-out">
+        <button id="sign-in-google">Sign In with Google</button>
+    </div>
+    
+    <main id="signed-in">
+        <button id="sign-out">Sign Out</button>
+        <div class="card">
+            <div class="question">
+                <span class="question-type">Create a sentence using the term:</span>
+                <span class="question-term">El autobús</span>
+            </div>
+            <div class="user-response">
+                <form id="user-response-form">
+                    <input id="input-box" type="text" placeholder="Enter your response">
+                    <button id="submit-button" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="feedback">
+            <p>
+                Feedback goes here: Lorem ipsum dolor sit amet, c
+                onsectetur adipiscing elit. Sed do eiusmod tempor 
+                incididunt ut labore et dolore magna aliqua. 
+                Ut enim ad minim veniam, quis nostrud exercitation u
+                llamco laboris nisi ut aliquip ex ea commodo consequat. 
+                Duis aute irure dolor in reprehenderit 
+            </p>
+        </div>
+    </main>
 </body>
 </html>

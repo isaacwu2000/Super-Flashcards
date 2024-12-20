@@ -47,14 +47,30 @@ async function signOutFromGoogle() {
 }
 
 // Making the google sign in and out buttons work
-const signInGoogleButton = document.getElementById('sign-in-google');
-signInGoogleButton.addEventListener('click', function() {
+const signInBtn = document.getElementById('sign-in-google');
+signInBtn.addEventListener('click', function() {
     signInWithGoogle();
     console.log("Signed in")
 });
 
-const signOutButton = document.getElementById('sign-out');
-signOutButton.addEventListener('click', function() {
+const signOutBtn = document.getElementById('sign-out');
+signOutBtn.addEventListener('click', function() {
     signOutFromGoogle();
     console.log("Signed out")
+});
+
+// Making the sign in buttons show certain info
+const whenSignedIn = document.getElementById('signed-in');
+const whenSignedOut = document.getElementById('signed-out');
+
+auth.onAuthStateChanged(user => {
+    if (user) {
+        // signed in
+        whenSignedIn.hidden = false;
+        whenSignedOut.hidden = true;
+    } else {
+        // not signed in
+        whenSignedIn.hidden = true;
+        whenSignedOut.hidden = false;
+    }
 });
