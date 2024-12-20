@@ -60,8 +60,8 @@ signOutBtn.addEventListener('click', function() {
 });
 
 // Making the sign in buttons show certain info
-const whenSignedIn = document.getElementByClassName('signed-in');
-const whenSignedOut = document.getElementByClassName('signed-out');
+const whenSignedIn = document.getElementById('signed-in');
+const whenSignedOut = document.getElementById('signed-out');
 
 whenSignedOut.hidden = false;
 whenSignedIn.hidden = true;
