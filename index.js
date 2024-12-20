@@ -1,6 +1,6 @@
 // Importing the used firebase functions
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js';
-import { getAuth } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
+import { getAuth, onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
 import { GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
 import { signInWithPopup } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
 import { signOut } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
@@ -60,10 +60,13 @@ signOutBtn.addEventListener('click', function() {
 });
 
 // Making the sign in buttons show certain info
-const whenSignedIn = document.getElementById('signed-in');
-const whenSignedOut = document.getElementById('signed-out');
+const whenSignedIn = document.getElementByClassName('signed-in');
+const whenSignedOut = document.getElementByClassName('signed-out');
 
-auth.onAuthStateChanged(user => {
+whenSignedOut.hidden = false;
+whenSignedIn.hidden = true;
+
+onAuthStateChanged(auth, user => {
     if (user) {
         // signed in
         whenSignedIn.hidden = false;
