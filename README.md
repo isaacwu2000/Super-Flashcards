@@ -1,7 +1,10 @@
 # Super-Flashcards
 Harnessing the power of Generative AI and leveraging science-based learning principles, Super Flashcards help you learn Spanish vocabulary through in-context word interpretation and apply your knowledge with sentence creation.
 
-# How to set up
-Set the environmental variable
+# HProcess
 pip install openai
-OPENAI_API_KEY = 'your secret key'
+export OPENAI_API_KEY = 'my secret key'
+npm install -g firebase-tools
+firebase login
+firebase init
+firebase serve
