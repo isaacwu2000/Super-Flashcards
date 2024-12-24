@@ -30,7 +30,6 @@ async function signInWithGoogle() {
         // Access the signed-in user's information
         const user = result.user;
         console.log("User Info:", user);
-        alert(`Hello, ${user.displayName}! You are signed in.`);
     } catch (error) {
         console.error("Error signing in with Google:", error);
     }
@@ -40,7 +39,6 @@ async function signInWithGoogle() {
 async function signOutFromGoogle() {
     try {
         await signOut(auth);
-        alert("You are signed out.");
     } catch (error) {
         console.error("Error signing out:", error);
     }

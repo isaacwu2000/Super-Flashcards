@@ -64,17 +64,19 @@ main {
 }
 
 #input-box {
-    font-size: 24px;
     flex: 1;
     padding: 24px 32px 24px 32px;
     margin-right: 20px;
     box-shadow: inset 2px 2px 1cm rgba(0, 0, 0, 0);
     border: none;
     border-radius: 16px;
+
+    font-size: 36px;
+    font: inherit;
+    font-weight: 400;
 }
 
 #submit-button {
-    font-size: 28px;
     height: 72px;
     padding-left: 24px;
     padding-right: 24px;
@@ -83,6 +85,10 @@ main {
     border-radius: 16px;
     color: white;
     background-color: black;
+
+    font-size: 36px;
+    font: inherit;
+    font-weight: 400;
 }
 
 /* Feedback styling */
