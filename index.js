@@ -66,11 +66,11 @@ const whenSignedOut = document.getElementById('signed-out');
 onAuthStateChanged(auth, user => {
     if (user) {
         // signed in
-        whenSignedIn.hidden = false;
-        whenSignedOut.hidden = true;
+        whenSignedIn.style.display = 'block';
+        whenSignedOut.style.display = 'none';
     } else {
         // not signed in
-        whenSignedIn.hidden = true;
-        whenSignedOut.hidden = false;
+        whenSignedIn.style.display = 'none';
+        whenSignedOut.style.display = 'block';
     }
 });
