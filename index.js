@@ -72,3 +72,19 @@ onAuthStateChanged(auth, user => {
         whenSignedOut.style.display = 'block';
     }
 });
+
+// Making the add cards button work
+const addCardsBtn = document.getElementById('add-cards-btn');
+const addingCardsDiv = document.getElementById('adding-cards');
+addCardsBtn.addEventListener('click', function() {
+    if (addCardsBtn.textContent == '+') {
+        addingCardsDiv.style.display = 'block';
+        addCardsBtn.textContent = '-';
+        console.log('displaying'); 
+    }
+    else {
+        addingCardsDiv.style.display = 'none';
+        addCardsBtn.textContent = '+';
+        console.log('noe displaying');
+    }
+});

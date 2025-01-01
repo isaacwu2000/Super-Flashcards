@@ -44,20 +44,24 @@ body {
     width: 100%;
     height: 100%;
 }
+
 /* Nav bar - adding cards and signing out */
 nav {
     display: flex;
     justify-content: end;
 }
 
+/* Adding cards btn */
 .add-cards {
     margin-right: 20px;
     display: flex;
+    justify-content: center;
+    align-items: center;
     height: 40px;
     width: 40px;
 }
 
-#add-cards {
+#add-cards-btn {
     border: none;
     height: 100%;
     width: 100%;
@@ -70,8 +74,8 @@ nav {
 
 .add-cards:hover {
     opacity: 0.7;
+    cursor: pointer;
 }
-
 
 /* Signing out */
 .sign-out {
@@ -86,3 +90,41 @@ nav {
     border: none;
 }
 
+/* Adding cards multi-line form */
+#adding-cards {
+    max-width: 800px;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: lightgray;
+    padding: 30px;
+    border-radius: 20px;
+    display: none;
+}
+
+#adding-cards-form {
+    display: flex;
+    flex-direction: column; 
+    gap: 20px; 
+}
+
+#adding-cards-form-label {
+    font-size: 24px;
+}
+
+#inputed-flashcards-textarea {
+    height: 500px;
+    font: inherit;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+#inputed-flashcards-submit-btn {
+    width: fit-content;
+    padding: 10px 20px 10px 20px;
+    border: none;
+    font: inherit;
+    border-radius: 20px;
+}

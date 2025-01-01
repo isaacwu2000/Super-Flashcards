@@ -24,9 +24,16 @@
     </div>
     <div id="signed-in">
         <nav>
-            <div class="add-cards"><button id="add-cards">+</button></div>
+            <div class="add-cards"><button id="add-cards-btn">+</button></div>
             <div class="sign-out"><button id="sign-out">Sign Out</button></div>
         </nav>
+        <div id="adding-cards">
+            <form id="adding-cards-form">
+                <label id="adding-cards-form-label" for="inputed-flashcards">Flashcards:</label>
+                <textarea id="inputed-flashcards-textarea" name="inputed-flashcards" placeholder="Type your flashcards in the proper format here..."></textarea>
+                <button id="inputed-flashcards-submit-btn" type="submit">Submit</button>
+            </form>
+        </div>        
         <main>
             <div class="card">
                 <div class="question">
