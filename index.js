@@ -1,8 +1,7 @@
 // Importing the used firebase functions
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js';
 import { getAuth, onAuthStateChanged, GoogleAuthProvider,signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
-import { getFirestore, collection, addDoc, doc, setDoc } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
-
+import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js';
 
 // Consiguring Firebase web app
 const firebaseConfig = {
@@ -80,12 +79,10 @@ addCardsBtn.addEventListener('click', function() {
     if (addCardsBtn.textContent == '+') {
         addingCardsDiv.style.display = 'block';
         addCardsBtn.textContent = '-';
-        console.log('displaying'); 
     }
     else {
         addingCardsDiv.style.display = 'none';
         addCardsBtn.textContent = '+';
-        console.log('noe displaying');
     }
 });
 
@@ -101,12 +98,21 @@ addingCardsForm.addEventListener('submit', (event) => {
     const inputedFlashcards = inputedFlashcardsTextarea.value;
     console.log(inputedFlashcards);
     // Uploading the cards to firbase
-
+    addDoc(collection(db, "flashcard_sets"), {
+        dateCreated: serverTimestamp(),
+        name: `${user.displayName}\'s Main Set`,
+        uid: user.uid
+    }).then((docRef) => {
+        console.log("Document added with ID:", docRef.id);
+    });
+   
+    console.log("Document written with ID: ", docRef.id);
     // Closing the form
     addingCardsDiv.style.display = 'none';
     addCardsBtn.textContent = '+';
-    console.log('noe displaying');
 });
 
 
 
+
+  
