@@ -88,3 +88,23 @@ addCardsBtn.addEventListener('click', function() {
         console.log('noe displaying');
     }
 });
+
+// Getting the add flashcards div to be able to add flashcards
+const addingCardsForm = document.getElementById('adding-cards-form');
+const inputedFlashcardsTextarea = document.getElementById('inputed-flashcards-textarea');
+
+// Extracting the flashcards when the form is submited
+addingCardsForm.addEventListener('submit', (event) => {
+    // Prevent the form from reloading the page
+    event.preventDefault();
+  
+    // Get the value of the textarea
+    const inputedFlashcards = inputedFlashcardsTextarea.value;
+    console.log(inputedFlashcards);
+
+    // Closing the form
+    addingCardsDiv.style.display = 'none';
+    addCardsBtn.textContent = '+';
+    console.log('noe displaying');
+});
+
