@@ -1,9 +1,8 @@
 // Importing the used firebase functions
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js';
-import { getAuth, onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
-import { GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
-import { signInWithPopup } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
-import { signOut } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
+import { getAuth, onAuthStateChanged, GoogleAuthProvider,signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
+import { getFirestore, collection, addDoc, doc, setDoc } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
+
 
 // Consiguring Firebase web app
 const firebaseConfig = {
@@ -19,6 +18,7 @@ const firebaseConfig = {
 // Initializing Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 // Setting the GoogleAuthProvider
 const provider = new GoogleAuthProvider();
@@ -97,14 +97,16 @@ const inputedFlashcardsTextarea = document.getElementById('inputed-flashcards-te
 addingCardsForm.addEventListener('submit', (event) => {
     // Prevent the form from reloading the page
     event.preventDefault();
-  
     // Get the value of the textarea
     const inputedFlashcards = inputedFlashcardsTextarea.value;
     console.log(inputedFlashcards);
+    // Uploading the cards to firbase
 
     // Closing the form
     addingCardsDiv.style.display = 'none';
     addCardsBtn.textContent = '+';
     console.log('noe displaying');
 });
+
+
 
