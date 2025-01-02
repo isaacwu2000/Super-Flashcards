@@ -1,7 +1,7 @@
 // Importing the used firebase functions
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js';
 import { getAuth, onAuthStateChanged, GoogleAuthProvider,signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
-import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js';
+import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js';
 
 // Consiguring Firebase web app
 const firebaseConfig = {
@@ -25,10 +25,7 @@ const provider = new GoogleAuthProvider();
 // Function to sign in with Google
 async function signInWithGoogle() {
     try {
-        const result = await signInWithPopup(auth, provider);
-        // Access the signed-in user's information
-        const user = result.user;
-        console.log("User Info:", user);
+        await signInWithPopup(auth, provider);
     } catch (error) {
         console.error("Error signing in with Google:", error);
     }
@@ -60,9 +57,11 @@ signOutBtn.addEventListener('click', function() {
 const whenSignedIn = document.getElementById('signed-in');
 const whenSignedOut = document.getElementById('signed-out');
 
+let currentUser = null;
 onAuthStateChanged(auth, user => {
     if (user) {
         // signed in
+        currentUser = user;
         whenSignedIn.style.display = 'block';
         whenSignedOut.style.display = 'none';
     } else {
@@ -90,23 +89,63 @@ addCardsBtn.addEventListener('click', function() {
 const addingCardsForm = document.getElementById('adding-cards-form');
 const inputedFlashcardsTextarea = document.getElementById('inputed-flashcards-textarea');
 
+// Searching for / Getting the User's flashcard set reference
+async function findUserFlashcardSet() {
+    const q = query(collection(db, "flashcard_sets"), where("uid", "==", currentUser.uid));
+    const querySnapshot = await getDocs(q);
+
+    let docRef = null;
+    querySnapshot.forEach((docSnap) => {
+        docRef = doc(db, "flashcard_sets", docSnap.id);
+    });
+
+    return docRef;
+}
+
 // Extracting the flashcards when the form is submited
-addingCardsForm.addEventListener('submit', (event) => {
+// and uploading them to Firebase Firestore
+addingCardsForm.addEventListener('submit', async (event) => {
     // Prevent the form from reloading the page
     event.preventDefault();
+
+    // Getting the reference for the user's flashcard set
+    const userFlashcardSetRef = await findUserFlashcardSet();
+
+    // Creating the User's main set if they don't have one yet
+    if (userFlashcardSetRef == null) {
+        addDoc(collection(db, "flashcard_sets"), {
+            dateCreated: serverTimestamp(),
+            name: `${currentUser.displayName}\'s Main Set`,
+            uid: currentUser.uid
+        })
+    }
+
     // Get the value of the textarea
     const inputedFlashcards = inputedFlashcardsTextarea.value;
-    console.log(inputedFlashcards);
-    // Uploading the cards to firbase
-    addDoc(collection(db, "flashcard_sets"), {
-        dateCreated: serverTimestamp(),
-        name: `${user.displayName}\'s Main Set`,
-        uid: user.uid
-    }).then((docRef) => {
-        console.log("Document added with ID:", docRef.id);
-    });
-   
-    console.log("Document written with ID: ", docRef.id);
+
+    // Converting the text area to an arraydict of flashcards
+    let inputedFlashcardsArrayDict = [];
+    let inputedFlashcardsArray = inputedFlashcards.split("\n");
+    for (let unformattedFlashcard of inputedFlashcardsArray) {
+        let flashcardTerm = unformattedFlashcard.split(",").at(0);
+        let flashcardDef = unformattedFlashcard.split(",").at(1);
+        let flashcardLevel = unformattedFlashcard.split(",").at(2);
+
+        let formattedFlashcard = {
+            term: flashcardTerm,
+            def: flashcardDef,
+            level: flashcardLevel
+        };
+        inputedFlashcardsArrayDict.push(formattedFlashcard);
+    }
+
+    // Setting the flashcards in the user's set in firebase
+    
+
+
+
+
+
     // Closing the form
     addingCardsDiv.style.display = 'none';
     addCardsBtn.textContent = '+';
