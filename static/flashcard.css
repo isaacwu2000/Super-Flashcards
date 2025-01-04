@@ -32,14 +32,10 @@ main {
     flex: 3;
 }
 
-.question-type {
+#question {
     font-size: 36px;
     margin-bottom: 42px;
     font-weight: inherit;
-}
-
-.question-term {
-    font-size: 108px;
 }
 
 /* User input box styling */
