@@ -102,6 +102,15 @@ async function findUserFlashcardSet() {
     return docRef;
 }
 
+// Making the textarea permantly hold the flashcards
+async function displayFlashcardsInTextarea(userFlashcardSetRef) {
+    // getting the documents
+    const querySnapshot = await getDocs(userFlashcardSetRef);
+    const flashcards = querySnapshot.docs.map(doc => doc.data());
+    console.log(flashcards);
+}
+
+
 // Extracting the flashcards when the form is submited
 // and uploading them to Firebase Firestore
 addingCardsForm.addEventListener('submit', async (event) => {
@@ -109,7 +118,10 @@ addingCardsForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     // Getting the reference for the user's flashcard set
-    const userFlashcardSetRef = await findUserFlashcardSet();
+    let userFlashcardSetRef = await findUserFlashcardSet();
+    console.log(userFlashcardSetRef);
+    displayFlashcardsInTextarea(userFlashcardSetRef);
+
 
     // Creating the User's main set if they don't have one yet
     if (userFlashcardSetRef == null) {
@@ -118,6 +130,7 @@ addingCardsForm.addEventListener('submit', async (event) => {
             name: `${currentUser.displayName}\'s Main Set`,
             uid: currentUser.uid
         })
+        userFlashcardSetRef = await findUserFlashcardSet();
     }
 
     // Get the value of the textarea
@@ -140,10 +153,21 @@ addingCardsForm.addEventListener('submit', async (event) => {
     }
 
     // Setting the flashcards in the user's set in firebase
-    
+    const flashcardsCollection = collection(userFlashcardSetRef, "flashcards");
 
+    const setFlashcards = async () => {
+        for (let flashcard of inputedFlashcardsArrayDict) {
+             // Set data for the subcollection document
+            await addDoc(flashcardsCollection, {
+                flashcard
+            });
+        }
+       
 
+        console.log("Subcollection document added!");
+    };
 
+    setFlashcards();
 
 
     // Closing the form
