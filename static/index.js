@@ -1,7 +1,7 @@
 // Importing the used firebase functions
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js';
 import { getAuth, onAuthStateChanged, GoogleAuthProvider,signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js';
-import { getFirestore, collection, addDoc, doc, setDoc, serverTimestamp, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js';
+import { getFirestore, collection, addDoc, doc, serverTimestamp, query, where, getDocs, deleteDoc } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js';
 
 // Consiguring Firebase web app
 const firebaseConfig = {
@@ -57,13 +57,47 @@ signOutBtn.addEventListener('click', function() {
 const whenSignedIn = document.getElementById('signed-in');
 const whenSignedOut = document.getElementById('signed-out');
 
+// Searching for / Getting the User's flashcard set reference
+async function findUserFlashcardSet(user) {
+    const q = query(collection(db, "flashcard_sets"), where("uid", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+
+    let docRef = null;
+    querySnapshot.forEach((docSnap) => {
+        docRef = doc(db, "flashcard_sets", docSnap.id);
+    });
+
+    return docRef;
+}
+
+// Making the textarea permantly hold the flashcards
+async function displayFlashcardsInTextarea(userFlashcardSetRef) {
+    // Getting the flashcards
+    const querySnapshot = await getDocs(collection(userFlashcardSetRef, "flashcards"));
+    const flashcardArrayDicts = querySnapshot.docs.map(doc => doc.data());
+
+    // Converting them to a string and updating the textarea
+    let flashcardsString = '';
+    for (let flashcardDict of flashcardArrayDicts) {
+        flashcardsString += `${flashcardDict.term},${flashcardDict.def},${flashcardDict.level}\n`;
+    }
+    const flashcardTextarea = document.getElementById("inputed-flashcards-textarea");
+    flashcardTextarea.value = flashcardsString;
+}
+
 let currentUser = null;
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(auth, async user => {
     if (user) {
         // signed in
         currentUser = user;
         whenSignedIn.style.display = 'block';
         whenSignedOut.style.display = 'none';
+
+        // Setting the text area at the start
+        const userFlashcardSetRef = await findUserFlashcardSet(currentUser);
+        if (userFlashcardSetRef != null) {
+            displayFlashcardsInTextarea(userFlashcardSetRef);
+        }
     } else {
         // not signed in
         whenSignedIn.style.display = 'none';
@@ -89,28 +123,6 @@ addCardsBtn.addEventListener('click', function() {
 const addingCardsForm = document.getElementById('adding-cards-form');
 const inputedFlashcardsTextarea = document.getElementById('inputed-flashcards-textarea');
 
-// Searching for / Getting the User's flashcard set reference
-async function findUserFlashcardSet() {
-    const q = query(collection(db, "flashcard_sets"), where("uid", "==", currentUser.uid));
-    const querySnapshot = await getDocs(q);
-
-    let docRef = null;
-    querySnapshot.forEach((docSnap) => {
-        docRef = doc(db, "flashcard_sets", docSnap.id);
-    });
-
-    return docRef;
-}
-
-// Making the textarea permantly hold the flashcards
-async function displayFlashcardsInTextarea(userFlashcardSetRef) {
-    // getting the documents
-    const querySnapshot = await getDocs(userFlashcardSetRef);
-    const flashcards = querySnapshot.docs.map(doc => doc.data());
-    console.log(flashcards);
-}
-
-
 // Extracting the flashcards when the form is submited
 // and uploading them to Firebase Firestore
 addingCardsForm.addEventListener('submit', async (event) => {
@@ -118,10 +130,7 @@ addingCardsForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     // Getting the reference for the user's flashcard set
-    let userFlashcardSetRef = await findUserFlashcardSet();
-    console.log(userFlashcardSetRef);
-    displayFlashcardsInTextarea(userFlashcardSetRef);
-
+    let userFlashcardSetRef = await findUserFlashcardSet(currentUser);
 
     // Creating the User's main set if they don't have one yet
     if (userFlashcardSetRef == null) {
@@ -130,7 +139,7 @@ addingCardsForm.addEventListener('submit', async (event) => {
             name: `${currentUser.displayName}\'s Main Set`,
             uid: currentUser.uid
         })
-        userFlashcardSetRef = await findUserFlashcardSet();
+        userFlashcardSetRef = await findUserFlashcardSet(currentUser);
     }
 
     // Get the value of the textarea
@@ -152,28 +161,37 @@ addingCardsForm.addEventListener('submit', async (event) => {
         inputedFlashcardsArrayDict.push(formattedFlashcard);
     }
 
-    // Setting the flashcards in the user's set in firebase
+    // Defining the user's flashcardCollection
     const flashcardsCollection = collection(userFlashcardSetRef, "flashcards");
 
+    // Setting the flashcards in the user's set in firebase
     const setFlashcards = async () => {
+        // Deleting all the flashcards in the collectin
+        const querySnapshot = await getDocs(flashcardsCollection);
+        for (const docSnap of querySnapshot.docs) {
+            await deleteDoc(docSnap.ref);
+        }
+        // Adding the data in the text area
         for (let flashcard of inputedFlashcardsArrayDict) {
              // Set data for the subcollection document
             await addDoc(flashcardsCollection, {
-                flashcard
+                term: flashcard.term,
+                def: flashcard.def,
+                level: flashcard.level
             });
         }
-       
-
-        console.log("Subcollection document added!");
     };
 
-    setFlashcards();
-
+    await setFlashcards();
 
     // Closing the form
     addingCardsDiv.style.display = 'none';
     addCardsBtn.textContent = '+';
+
+    // Force reloading the page to update the flashcards in the textarea
+    location.reload();
 });
+
 
 
 
