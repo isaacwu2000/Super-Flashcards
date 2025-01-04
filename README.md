@@ -8,4 +8,5 @@ pip install openai (inside the python directory)
 Set in .env: OPENAI_API_KEY = "your_api_key"
 pip install python-dotenv
 pip install firebase-admin
-Set firebase_private_key.json to the private key
+Set serviceAccountKey.json to the private key and info
+pip install flask-cors

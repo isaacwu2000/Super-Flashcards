@@ -98,6 +98,15 @@ onAuthStateChanged(auth, async user => {
         if (userFlashcardSetRef != null) {
             displayFlashcardsInTextarea(userFlashcardSetRef);
         }
+
+        // Sending the User's data to flask
+        fetch('http://127.0.0.1:5500/receive-user-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(currentUser)
+        })
     } else {
         // not signed in
         whenSignedIn.style.display = 'none';
