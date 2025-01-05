@@ -1,8 +1,9 @@
 import os
 from flask import Flask, render_template, request, jsonify, session
+from flask_socketio import SocketIO
 
 app = Flask(__name__)
-app.secret_key = 'psw'
+socketio = SocketIO(app)
 
 @app.route('/')
 def home():
@@ -12,7 +13,6 @@ def home():
 @app.route('/receive-user-data', methods=['POST'])
 def receive_user_data():
     user = request.get_json() 
-     
     # Getting the user's flashcards and sorting them by level
     from python.flashcard_interpretation import interpret_firebase_flashcards, update_firebase_flashcard_level
     from python.flashcard_alg import make_batch, batch_retrieval_alg
@@ -42,4 +42,4 @@ def receive_user_data():
     return "Data recieved"
 
 if __name__ == '__main__':
-    app.run(port=5500, debug=True)
+    socketio.run(app, port=5500, debug=True)

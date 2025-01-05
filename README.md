@@ -10,3 +10,5 @@ pip install python-dotenv
 pip install firebase-admin
 Set serviceAccountKey.json to the private key and info
 pip install flask-cors
+pip install flask-socketio
+pip install eventlet
