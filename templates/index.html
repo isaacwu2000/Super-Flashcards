@@ -8,8 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/index.css">
     <link rel="stylesheet" href="static/flashcard.css">
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
 
     <script src="static/index.js" type="module"></script>
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
 </head>
 <body>
     <div class="home-page" id="signed-out">
@@ -36,7 +38,7 @@
         </div>        
         <main>
             <div class="card">
-                <p id="question">{{question}}</p>
+                <p id="question">Lorem ipsum dolor sit amet</p>
                 <div class="user-response">
                     <form id="user-response-form">
                         <input id="input-box" type="text" placeholder="Enter your response">
@@ -54,6 +56,9 @@
                     Duis aute irure dolor in reprehenderit 
                 </p>
             </div>
+            <pyscript src="model.py"></pyscript>
+            <pyscript src="flashcard_alg.py"></pyscript>
+            <pyscript src="app.py"></pyscript>
         </main>
     </div>
 </body>
